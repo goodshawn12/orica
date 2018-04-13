@@ -6,7 +6,8 @@ close
 
 %% load sample EEG dataset
 EEG = pop_loadset('SIM_STAT_16ch_3min.set');
-EEG.icawinv_true = EEG.etc.LFM{1};
+EEG.data = double(EEG.data);		% convert to double precision to avoid round-off errors
+EEG.icawinv_true = EEG.etc.LFM{1};	% ground truth mixing matrix
 EEG.icawinv = EEG.icawinv_true; EEG.icaweights = pinv(EEG.icawinv); EEG.icasphere = eye(EEG.nbchan); EEG = eeg_checkset(EEG);
 
 [nChs, nPts] = size(EEG.data);
